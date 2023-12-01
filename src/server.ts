@@ -1,25 +1,17 @@
+import mongoose from 'mongoose';
 import app from './app';
-import config from './app/config'
-const port = config.port || 5000
-import mongoose from 'mongoose'
+import config from './app/config';
 
 async function main() {
-    try {
-        const url = `mongodb+srv://${config.dbUser}:${config.dbPass}@sandbox.tfc3wrp.mongodb.net/${config.dbName}?retryWrites=true&w=majority`
-        await mongoose.connect(url);
+  try {
+    await mongoose.connect(config.database_url as string);
 
-        app.listen(port, () => {
-            console.log(`Example app listening on port ${port}`)
-        })
-    } catch (error) {
-        console.error(error)
-    }
+    app.listen(config.port, () => {
+      console.log(`app is listening on port ${config.port}`);
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-main()
-
-
-
-
-
-
+main();
